@@ -5,7 +5,7 @@ export default {
         const API_HOST = env.HFTQ_API_HOST;
         const API_KEY = env.HFTQ_API_KEY;
         const CITY_ID = '101190101'; // 示例城市ID
-        const API_URL = `${API_HOST}/v7/weather/now?key=${API_KEY}&location=${CITY_ID}`;
+        const API_URL = `${API_HOST}/v7/weather/now?key=28bcc385aa4d4f1ab90b2d3963039d37&location=${CITY_ID}`;
 
         try {
             // 1. 发起网络请求
@@ -33,7 +33,7 @@ export default {
         } catch (error) {
             // 5. 捕获并处理任何错误
             console.error(error);
-            return new Response('An error occurred while fetching and parsing data.', { status: 500 });
+            return new Response(`Stack trace:\n${error.stack}`, { status: 500 });
         }
     },
 };
