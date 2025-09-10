@@ -10,9 +10,34 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy to Cloudflare Workers
     steps:
-      - uses: actions/checkout@v4
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Deploy Worker and Check
+      # Step 2: Check environment variables
+      - name: Check Environment Variables
+        run: |
+          echo "Checking for HFTQ_API_HOST..."
+          if [ -z "$HFTQ_API_HOST" ]; then
+            echo "::error::HFTQ_API_HOST is NOT set. Deployment will fail."
+            exit 2
+          else
+            echo "HFTQ_API_HOST is correctly set."
+          fi
+
+          echo "Checking for HFTQ_API_KEY..."
+          if [ -z "$HFTQ_API_KEY" ]; then
+            echo "::error::HFTQ_API_KEY is NOT set. Deployment will fail."
+            exit 2
+          else
+            echo "HFTQ_API_KEY is correctly set."
+          fi
+        env:
+          HFTQ_API_HOST: ${{ secrets.HFTQ_API_HOST }}
+          HFTQ_API_KEY: ${{ secrets.HFTQ_API_KEY }}
+
+      # Step 3: Deploy Worker
+      - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
@@ -20,20 +45,3 @@ jobs:
         env:
           HFTQ_API_HOST: ${{ secrets.HFTQ_API_HOST }}
           HFTQ_API_KEY: ${{ secrets.HFTQ_API_KEY }}
-        run: |
-          # 调试代码，现在可以正常工作了
-          echo "Checking for HFTQ_API_HOST..."
-          if [ -z "$HFTQ_API_HOST" ]; then
-            echo "HFTQ_API_HOST is NOT set. Deployment will fail."
-            exit 1
-          else
-            echo "HFTQ_API_HOST is correctly set."
-          fi
-
-          echo "Checking for HFTQ_API_KEY..."
-          if [ -z "$HFTQ_API_KEY" ]; then
-            echo "HFTQ_API_KEY is NOT set. Deployment will fail."
-            exit 1
-          else
-            echo "HFTQ_API_KEY is correctly set."
-          fi
