@@ -16,4 +16,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          secrets: API_HOST API_KEY
+          secrets: |
+            API_HOST
+            API_KEY
