@@ -22,6 +22,8 @@ export default {
             // 4. 将解析后的数据转换回 JSON 字符串并返回
 
             console.log(data);
+
+
             // return new Response(JSON.stringify(data), {
             //     headers: {
             //         'Content-Type': 'application/json'
