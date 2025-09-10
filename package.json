@@ -1,0 +1,14 @@
+{
+  "name": "和风天气",
+  "version": "1.0.0",
+  "description": "和风天气",
+  "private": true,
+  "main": "hftq.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "start": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

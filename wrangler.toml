@@ -1,0 +1,8 @@
+name = "hftq"
+main = "functions/api/hftq.js"  # 确保这里是你的代码路径
+compatibility_date = "2025-09-10"
+
+[vars]
+# 你的环境变量，在这里定义，但值在 Cloudflare 或 GitHub Secrets 里设置
+HFTQ_API_HOST = ""
+HFTQ_API_KEY = ""
