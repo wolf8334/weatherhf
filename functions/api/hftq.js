@@ -23,7 +23,7 @@ export default {
 
             console.log(data);
 
-
+            
             // return new Response(JSON.stringify(data), {
             //     headers: {
             //         'Content-Type': 'application/json'
