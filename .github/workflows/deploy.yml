@@ -36,5 +36,4 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           secrets: |
-            HFTQ_API_HOST
-            HFTQ_API_KEY
+            HFTQ_API_HOST HFTQ_API_KEY
