@@ -12,9 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 这段代码用来安全地检查变量
-      - name: Check Environment Variables
+      - name: Deploy Worker and Check
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+        env:
+          HFTQ_API_HOST: ${{ secrets.HFTQ_API_HOST }}
+          HFTQ_API_KEY: ${{ secrets.HFTQ_API_KEY }}
         run: |
+          # 调试代码，现在可以正常工作了
           echo "Checking for HFTQ_API_HOST..."
           if [ -z "$HFTQ_API_HOST" ]; then
             echo "HFTQ_API_HOST is NOT set. Deployment will fail."
@@ -30,12 +37,3 @@ jobs:
           else
             echo "HFTQ_API_KEY is correctly set."
           fi
-
-      - name: Deploy Worker
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-        env:
-          HFTQ_API_HOST: ${{ secrets.HFTQ_API_HOST }}
-          HFTQ_API_KEY: ${{ secrets.HFTQ_API_KEY }}
