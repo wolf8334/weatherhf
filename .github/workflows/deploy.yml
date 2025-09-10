@@ -11,11 +11,32 @@ jobs:
     name: Deploy to Cloudflare Workers
     steps:
       - uses: actions/checkout@v3
+
+      # 调试步骤：确认 GitHub Secrets 是否可用
+      - name: Debug secrets
+        run: |
+          if [ -z "${{ secrets.API_HOST }}" ]; then
+            echo "API_HOST not found"
+            exit 1
+          else
+            echo "API_HOST is available (value hidden)"
+          fi
+
+          if [ -z "${{ secrets.API_KEY }}" ]; then
+            echo "API_KEY not found"
+            exit 1
+          else
+            echo "API_KEY is available (value hidden)"
+          fi
+
+      # 部署到 Cloudflare Worker
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           secrets: |
-            API_HOST
-            API_KEY
+            [
+              "API_HOST",
+              "API_KEY"
+            ]
