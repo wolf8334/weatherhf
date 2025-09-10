@@ -13,7 +13,7 @@ export default {
 
             // 2. 检查响应是否成功
             if (!response.ok) {
-                console.log(`Failed to fetch data from ${TARGET_URL}. Status: ${response.status}`);
+                console.log(`Failed to fetch data from ${API_URL}. Status: ${response.status}`);
             }
 
             // 3. 解析 JSON 数据
