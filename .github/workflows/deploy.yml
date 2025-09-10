@@ -15,18 +15,18 @@ jobs:
       # 调试：确认 GitHub Secrets 是否存在
       - name: Debug secrets
         run: |
-          if [ -z "${{ secrets.API_HOST }}" ]; then
-            echo "API_HOST not found"
+          if [ -z "${{ secrets.HFTQ_API_HOST }}" ]; then
+            echo "HFTQ_API_HOST not found"
             exit 1
           else
-            echo "API_HOST is available (hidden)"
+            echo "HFTQ_API_HOST is available (hidden)"
           fi
 
-          if [ -z "${{ secrets.API_KEY }}" ]; then
-            echo "API_KEY not found"
+          if [ -z "${{ secrets.HFTQ_API_KEY }}" ]; then
+            echo "HFTQ_API_KEY not found"
             exit 1
           else
-            echo "API_KEY is available (hidden)"
+            echo "HFTQ_API_KEY is available (hidden)"
           fi
 
       # 部署 Worker
