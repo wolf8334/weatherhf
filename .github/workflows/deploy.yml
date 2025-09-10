@@ -10,30 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy to Cloudflare Workers
     steps:
-      - uses: actions/checkout@v3
-
-      # 调试：确认 GitHub Secrets 是否存在
-      - name: Debug secrets
-        run: |
-          if [ -z "${{ secrets.HFTQ_API_HOST }}" ]; then
-            echo "HFTQ_API_HOST not found"
-            exit 1
-          else
-            echo "HFTQ_API_HOST is available (hidden)"
-          fi
-
-          if [ -z "${{ secrets.HFTQ_API_KEY }}" ]; then
-            echo "HFTQ_API_KEY not found"
-            exit 1
-          else
-            echo "HFTQ_API_KEY is available (hidden)"
-          fi
-
-      # 部署 Worker
+      - uses: actions/checkout@v4
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          secrets: |
-            HFTQ_API_HOST HFTQ_API_KEY
+        env:
+          HFTQ_API_HOST: ${{ secrets.HFTQ_API_HOST }}
+          HFTQ_API_KEY: ${{ secrets.HFTQ_API_KEY }}
