@@ -38,9 +38,7 @@ export default {
                 humidity,
                 windDir,
                 windScale,
-                windSpeed,
-                locationId,
-                cityName
+                windSpeed
             } = nowData;
 
             const dt = getBeijingTime();
@@ -52,8 +50,8 @@ export default {
             console.log("windDir:", windDir);
             console.log("windScale:", windScale);
             console.log("windSpeed:", windSpeed);
-            console.log("locationId:", locationId);
-            console.log("cityName:", cityName);
+            console.log("locationId:", CITY_ID);
+            console.log("cityName:", "南京");
             console.log("dt:", dt);
             console.log("datagather:", env.datagather);
 
@@ -87,11 +85,11 @@ export default {
 
             const stmt8 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
-            ).bind(1, 8, locationId, dt);
+            ).bind(1, 8, CITY_ID, dt);
 
             const stmt9 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
-            ).bind(1, 9, cityName, dt);
+            ).bind(1, 9, "南京", dt);
 
             // 使用 batch() 方法批量执行
             const results = await env.datagather.batch([stmt1, stmt2, stmt3, stmt4, stmt5, stmt6, stmt7, stmt8, stmt9]);
