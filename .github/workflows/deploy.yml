@@ -1,4 +1,4 @@
-name: Deploy Worker
+name: 和风天气Worker
 
 on:
   push:
@@ -9,39 +9,27 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     name: Deploy to Cloudflare Workers
+
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Check environment variables
-      - name: Check Environment Variables
+      # 安装 wrangler CLI（因为 wrangler-action 不能直接写 secrets）
+      - name: Install Wrangler
+        run: npm install -g wrangler
+
+      # 写入 Cloudflare Worker Secrets
+      - name: Set Worker Secrets
         run: |
-          echo "Checking for HFTQ_API_HOST..."
-          if [ -z "$HFTQ_API_HOST" ]; then
-            echo "::error::HFTQ_API_HOST is NOT set. Deployment will fail."
-            exit 2
-          else
-            echo "HFTQ_API_HOST is correctly set."
-          fi
-
-          echo "Checking for HFTQ_API_KEY..."
-          if [ -z "$HFTQ_API_KEY" ]; then
-            echo "::error::HFTQ_API_KEY is NOT set. Deployment will fail."
-            exit 2
-          else
-            echo "HFTQ_API_KEY is correctly set."
-          fi
+          wrangler secret put HFTQ_API_HOST --yes <<< "${{ secrets.HFTQ_API_HOST }}"
+          wrangler secret put HFTQ_API_KEY --yes <<< "${{ secrets.HFTQ_API_KEY }}"
         env:
-          HFTQ_API_HOST: ${{ secrets.HFTQ_API_HOST }}
-          HFTQ_API_KEY: ${{ secrets.HFTQ_API_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
 
-      # Step 3: Deploy Worker
+      # 部署 Worker
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-        env:
-          HFTQ_API_HOST: ${{ secrets.HFTQ_API_HOST }}
-          HFTQ_API_KEY: ${{ secrets.HFTQ_API_KEY }}

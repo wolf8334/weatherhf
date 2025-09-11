@@ -5,7 +5,7 @@ export default {
         const API_HOST = env.HFTQ_API_HOST;
         const API_KEY = env.HFTQ_API_KEY;
         const CITY_ID = '101190101'; // 示例城市ID
-        const API_URL = `${API_HOST}/v7/weather/now?key=28bcc385aa4d4f1ab90b2d3963039d37&location=${CITY_ID}`;
+        const API_URL = `${API_HOST}/v7/weather/now?key=${API_KEY}&location=${CITY_ID}`;
 
         try {
             // 1. 发起网络请求
