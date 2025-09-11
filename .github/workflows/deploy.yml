@@ -1,5 +1,5 @@
 # deploy.yml
-name: Deploy Worker
+name: 和风天气Worker
 
 on:
   push:
@@ -12,11 +12,29 @@ jobs:
     name: Deploy to Cloudflare Workers
     steps:
       - uses: actions/checkout@v4
+
+      # 步骤一：创建秘密。这将确保你的 API 密钥存在于 Cloudflare。
+      - name: Put secrets
+        run: |
+          npm install wrangler@latest
+          echo "HFTQ_API_HOST: $HFTQ_API_HOST"
+          npx wrangler secret put HFTQ_API_HOST
+        env:
+          HFTQ_API_HOST: ${{ secrets.HFTQ_API_HOST }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+
+      - name: Put secrets
+        run: |
+          echo "28bcc385aa4d4f1ab90b2d3963039d37" | npx wrangler secret put HFTQ_API_KEY
+        env:
+          HFTQ_API_KEY: ${{ secrets.HFTQ_API_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+
+      # 步骤二：部署 Worker。因为秘密已经存在，这个步骤会正常运行。
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-        env:
-          HFTQ_API_HOST: ${{ secrets.HFTQ_API_HOST }}
-          HFTQ_API_KEY: ${{ secrets.HFTQ_API_KEY }}
