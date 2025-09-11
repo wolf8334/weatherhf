@@ -8,6 +8,9 @@ export default {
         const API_URL = `${API_HOST}/v7/weather/now?key=${API_KEY}&location=${CITY_ID}`;
 
         try {
+            console.log('API_HOST: ', API_HOST);
+            console.log('API_KEY: ', API_KEY);
+
             // 1. 发起网络请求
             const response = await fetch(API_URL);
 
