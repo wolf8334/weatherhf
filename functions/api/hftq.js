@@ -14,6 +14,7 @@ export default {
             // 2. 检查响应是否成功
             if (!response.ok) {
                 console.log(`Failed to fetch data from ${API_URL}. Status: ${response.status}`);
+                return new Response(`Failed to fetch data. Status: ${response.status}`, { status: response.status });
             }
 
             // 3. 解析 JSON 数据
@@ -33,7 +34,7 @@ export default {
         } catch (error) {
             // 5. 捕获并处理任何错误
             console.error(error);
-            return new Response(`Stack trace:\n${error.stack}`, { status: 500 });
+            return new Response(`An error occurred: ${error.message}`, { status: 500 });
         }
     },
 };
