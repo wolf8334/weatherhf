@@ -11,3 +11,8 @@ enabled = true
 binding = "HFTQURL"
 store_id = "bec4e50b78f449b49e5b89b37a572d9f"
 secret_name = "HFTQURL"
+
+[[d1_databases]]
+binding = "datagather"
+database_name = "datagather"
+database_id = "53fcc09b-cd79-40c1-8efe-5777a65dc412"

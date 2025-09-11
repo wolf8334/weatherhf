@@ -26,10 +26,24 @@ export default {
             // 3. 解析 JSON 数据
             const data = await response.json();
 
-            // 4. 将解析后的数据转换回 JSON 字符串并返回
+            // 4. 解析JSON并存库
+            const nowData = data.now;
 
-            console.log(data);
-
+            // 观测时间 obsTime 1、温度 temp 2、体感温度 feelsLike 3、湿度 humidity 4、风向 windDir 5、风力 windScale 6
+            // 风速 windSpeed 7、城市编码 locationId 8 城市名称 cityName 9
+            const {
+                obsTime,
+                temp,
+                feelsLike,
+                humidity,
+                windDir,
+                windScale,
+                windSpeed,
+                locationId,
+                cityName
+            } = nowData;
+            console.log(`obsTime ${obsTime}`);
+            console.log(`temp: ${temp}`);
             return new Response(JSON.stringify(data), {
                 headers: {
                     'Content-Type': 'application/json'
