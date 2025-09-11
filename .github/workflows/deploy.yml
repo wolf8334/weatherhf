@@ -17,7 +17,8 @@ jobs:
       - name: Put secrets
         run: |
           npm install wrangler@latest
-          npx wrangler secret put HFTQ_API_HOST  2
+          echo "HFTQ_API_HOST: $HFTQ_API_HOST"
+          npx wrangler secret put HFTQ_API_HOST
         env:
           HFTQ_API_HOST: ${{ secrets.HFTQ_API_HOST }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
@@ -25,7 +26,7 @@ jobs:
 
       - name: Put secrets
         run: |
-          npx wrangler secret put HFTQ_API_KEY  1
+          npx wrangler secret put HFTQ_API_KEY
         env:
           HFTQ_API_KEY: ${{ secrets.HFTQ_API_KEY }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
