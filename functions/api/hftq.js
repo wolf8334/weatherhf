@@ -8,9 +8,9 @@ export default {
         const API_URL = `${API_HOST}/v7/weather/now?key=${API_KEY}&location=${CITY_ID}`;
 
         try {
+            console.log('完整的 env 对象: ', JSON.stringify(env));
             console.log('API_HOST: ', API_HOST);
             console.log('API_KEY: ', API_KEY);
-            console.log('API_KEY: ', env.HFTQ_API_KEY1);
 
             // 1. 发起网络请求
             const response = await fetch(API_URL);
@@ -37,7 +37,7 @@ export default {
         } catch (error) {
             // 5. 捕获并处理任何错误
             console.error(error);
-            return new Response(`An error occurred: ${error.message}`, { status: 500 });
+            return new Response(`An error occurred: ${error.message},${JSON.stringify(env)}`, { status: 500 });
         }
     },
 };
