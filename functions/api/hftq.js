@@ -7,13 +7,15 @@ export default {
         const CITY_ID = '101190101'; // 示例城市ID
         const API_URL = `${API_HOST}/v7/weather/now?key=${API_KEY}&location=${CITY_ID}`;
 
+        const url = await env.HFTQURL.get();
+
         try {
             console.log('完整的 env 对象: ', JSON.stringify(env));
             console.log('API_HOST: ', API_HOST);
             console.log('API_KEY: ', API_KEY);
 
             // 1. 发起网络请求
-            const response = await fetch(API_URL);
+            const response = await fetch(url);
 
             // 2. 检查响应是否成功
             if (!response.ok) {
