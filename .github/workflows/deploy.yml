@@ -1,4 +1,4 @@
-name: 和风天气Worker
+name: 部署和风天气Worker
 
 on:
   push:
@@ -8,15 +8,28 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: 部署和风天气Worker
+    name: Deploy to Cloudflare Workers
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: Put secrets
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: 'secret put HFTQ_API_HOST'
+          secrets: HFTQ_API_HOST
+
+      - name: Put secrets
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: 'secret put HFTQ_API_KEY'
+          secrets: HFTQ_API_KEY
 
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-        env:
-          HFTQ_API_HOST: ${{ secrets.HFTQ_API_HOST }}
-          HFTQ_API_KEY: ${{ secrets.HFTQ_API_KEY }}
