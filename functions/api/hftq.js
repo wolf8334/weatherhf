@@ -7,6 +7,8 @@ export default {
         const CITY_ID = '101190101'; // 示例城市ID
         const API_URL = `${API_HOST}/v7/weather/now?key=${API_KEY}&location=${CITY_ID}`;
 
+        const HFTQURL = await env.HFTQURL.get();
+        console.log(`Fetching HFTQURL from ${HFTQURL}`);
         try {
             console.log('完整的 env 对象: ', JSON.stringify(env));
             console.log('API_HOST: ', API_HOST);

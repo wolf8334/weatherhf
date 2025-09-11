@@ -6,3 +6,8 @@ preview_urls = true
 # wrangler.toml (wrangler v3.88.0^)
 [observability.logs]
 enabled = true
+
+[[secrets_store_secrets]]
+binding = "HFTQURL"
+store_id = "bec4e50b78f449b49e5b89b37a572d9f"
+secret_name = "HFTQURL"
