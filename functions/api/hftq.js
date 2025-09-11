@@ -42,13 +42,20 @@ export default {
                 locationId,
                 cityName
             } = nowData;
-            const osbDate = new Date(obsTime);
-            console.log(`obsTime ${obsTime}`);
-            console.log(`fullYear ${osbDate.getFullYear()}`);
-            console.log(`month ${osbDate.getMonth()}`);
-            console.log(`temp: ${temp}`);
 
             const dt = getBeijingTime();
+
+            console.log("obsTime:", obsTime);
+            console.log("temp:", temp);
+            console.log("feelsLike:", feelsLike);
+            console.log("humidity:", humidity);
+            console.log("windDir:", windDir);
+            console.log("windScale:", windScale);
+            console.log("windSpeed:", windSpeed);
+            console.log("locationId:", locationId);
+            console.log("cityName:", cityName);
+            console.log("dt:", dt);
+            console.log("datagather:", env.datagather);
 
             const stmt1 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
