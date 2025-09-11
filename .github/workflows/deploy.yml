@@ -8,21 +8,28 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy to Cloudflare Workers
+    name: 部署和风天气Worker到CF
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 安装 wrangler CLI（因为 wrangler-action 不能直接写 secrets）
+      # 安装 wrangler CLI
       - name: Install Wrangler
         run: npm install -g wrangler
 
-      # 写入 Cloudflare Worker Secrets
+      # 写入 Cloudflare Worker Secrets（通过 GitHub Secrets 注入）
       - name: Set Worker Secrets
         run: |
-          wrangler secret put HFTQ_API_HOST --yes <<< "${{ secrets.HFTQ_API_HOST }}"
-          wrangler secret put HFTQ_API_KEY --yes <<< "${{ secrets.HFTQ_API_KEY }}"
+          echo "${{ secrets.HFTQ_API_HOST }}" | wrangler secret put HFTQ_API_HOST
+          echo "${{ secrets.HFTQ_API_KEY }}" | wrangler secret put HFTQ_API_KEY
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+
+      # 调试：确认 secrets 已写入（不会泄露值，只打印 key 名）
+      - name: List Worker Variables
+        run: wrangler secret list
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
