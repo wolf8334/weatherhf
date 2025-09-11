@@ -92,9 +92,9 @@ export default {
             ).bind(1, 9, "南京", dt);
 
             // 使用 batch() 方法批量执行
-            const results = await env.datagather.batch([stmt1, stmt2, stmt3, stmt4, stmt5, stmt6, stmt7, stmt8, stmt9]);
+            //const results = await env.datagather.batch([stmt1, stmt2, stmt3, stmt4, stmt5, stmt6, stmt7, stmt8, stmt9]);
 
-            console.log(`执行结果 ${results}`);
+            //console.log(`执行结果 ${results}`);
 
             return new Response(JSON.stringify(data), {
                 headers: {
