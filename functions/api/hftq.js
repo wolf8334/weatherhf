@@ -42,8 +42,55 @@ export default {
                 locationId,
                 cityName
             } = nowData;
+            const osbDate = new Date(obsTime);
             console.log(`obsTime ${obsTime}`);
+            console.log(`fullYear ${osbDate.getFullYear()}`);
+            console.log(`month ${osbDate.getMonth()}`);
             console.log(`temp: ${temp}`);
+
+            const dt = getBeijingTime();
+
+            const stmt1 = env.datagather.prepare(
+                "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
+            ).bind(1, 1, obsTime, dt);
+
+            const stmt2 = env.datagather.prepare(
+                "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
+            ).bind(1, 2, temp, dt);
+
+            const stmt3 = env.datagather.prepare(
+                "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
+            ).bind(1, 3, feelsLike, dt);
+
+            const stmt4 = env.datagather.prepare(
+                "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
+            ).bind(1, 4, humidity, dt);
+
+            const stmt5 = env.datagather.prepare(
+                "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
+            ).bind(1, 5, windDir, dt);
+
+            const stmt6 = env.datagather.prepare(
+                "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
+            ).bind(1, 6, windScale, dt);
+
+            const stmt7 = env.datagather.prepare(
+                "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
+            ).bind(1, 7, windSpeed, dt);
+
+            const stmt8 = env.datagather.prepare(
+                "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
+            ).bind(1, 8, locationId, dt);
+
+            const stmt9 = env.datagather.prepare(
+                "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
+            ).bind(1, 9, cityName, dt);
+
+            // 使用 batch() 方法批量执行
+            const results = await env.datagather.batch([stmt1, stmt2, stmt3, stmt4, stmt5, stmt6, stmt7, stmt8, stmt9]);
+
+            console.log(`执行结果 ${results}`);
+
             return new Response(JSON.stringify(data), {
                 headers: {
                     'Content-Type': 'application/json'
@@ -57,3 +104,24 @@ export default {
         }
     },
 };
+
+// 获取东八区时间字符串
+function getBeijingTime() {
+    const date = new Date();
+
+    // 转换为 UTC 时间
+    const utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+
+    // 东八区的时间，单位是毫秒
+    const beijingTime = new Date(utc + (3600000 * 8));
+
+    // 提取并格式化
+    const year = beijingTime.getFullYear();
+    const month = (beijingTime.getMonth() + 1).toString().padStart(2, '0');
+    const day = beijingTime.getDate().toString().padStart(2, '0');
+    const hours = beijingTime.getHours().toString().padStart(2, '0');
+    const minutes = beijingTime.getMinutes().toString().padStart(2, '0');
+    const seconds = beijingTime.getSeconds().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
