@@ -10,6 +10,7 @@ export default {
         try {
             console.log('API_HOST: ', API_HOST);
             console.log('API_KEY: ', API_KEY);
+            console.log('API_KEY: ', env.HFTQ_API_KEY1);
 
             // 1. 发起网络请求
             const response = await fetch(API_URL);
