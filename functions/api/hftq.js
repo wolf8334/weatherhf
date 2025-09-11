@@ -24,12 +24,11 @@ export default {
 
             console.log(data);
 
-            
-            // return new Response(JSON.stringify(data), {
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            // });
+            return new Response(JSON.stringify(data), {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
 
         } catch (error) {
             // 5. 捕获并处理任何错误
