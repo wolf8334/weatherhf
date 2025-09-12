@@ -106,6 +106,16 @@ export default {
             return new Response(`An error occurred: ${error.message},${JSON.stringify(env)}`, { status: 500 });
         }
     },
+    // scheduled 函数，只负责调用 fetch
+    async scheduled(event, env) {
+        // 创建一个请求
+        const dummyRequest = new Request('https://hftq.samuri34.workers.dev/api/hftq', {
+            method: 'POST'
+        });
+
+        // 直接调用 fetch
+        return this.fetch(dummyRequest, env);
+    }
 };
 
 // 获取东八区时间字符串
