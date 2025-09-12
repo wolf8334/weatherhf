@@ -16,3 +16,6 @@ secret_name = "HFTQURL"
 binding = "datagather"
 database_name = "datagather"
 database_id = "53fcc09b-cd79-40c1-8efe-5777a65dc412"
+
+[triggers]
+crons = ["*/10 * * * *"]
