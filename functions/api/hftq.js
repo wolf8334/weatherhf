@@ -57,44 +57,44 @@ export default {
 
             const stmt1 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
-            ).bind(1, 1, obsTime, dt).run();
+            ).bind(1, 1, obsTime, dt);
 
             const stmt2 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
-            ).bind(1, 2, temp, dt).run();
+            ).bind(1, 2, temp, dt);
 
             const stmt3 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
-            ).bind(1, 3, feelsLike, dt).run();
+            ).bind(1, 3, feelsLike, dt);
 
             const stmt4 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
-            ).bind(1, 4, humidity, dt).run();
+            ).bind(1, 4, humidity, dt);
 
             const stmt5 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
-            ).bind(1, 5, windDir, dt).run();
+            ).bind(1, 5, windDir, dt);
 
             const stmt6 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
-            ).bind(1, 6, windScale, dt).run();
+            ).bind(1, 6, windScale, dt);
 
             const stmt7 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
-            ).bind(1, 7, windSpeed, dt).run();
+            ).bind(1, 7, windSpeed, dt);
 
             const stmt8 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
-            ).bind(1, 8, CITY_ID, dt).run();
+            ).bind(1, 8, CITY_ID, dt);
 
             const stmt9 = env.datagather.prepare(
                 "INSERT INTO t_data (mp_id, data_def_id, data_value, data_time) VALUES (?, ?, ?, ?)"
-            ).bind(1, 9, "南京", dt).run();
+            ).bind(1, 9, "南京", dt);
 
             // 使用 batch() 方法批量执行
-            //const results = await env.datagather.batch([stmt1, stmt2, stmt3, stmt4, stmt5, stmt6, stmt7, stmt8, stmt9]);
+            const results = await env.datagather.batch([stmt1, stmt2, stmt3, stmt4, stmt5, stmt6, stmt7, stmt8, stmt9]);
 
-            return new Response(JSON.stringify(data), {
+            return new Response(JSON.stringify(results), {
                 headers: {
                     'Content-Type': 'application/json'
                 },
